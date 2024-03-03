@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Add Diary Entry</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="date">Date</label>
+            <input type="date" class="form-control" id="date" name="date">
+        </div>
+        <div class="form-group">
+            <label for="intensity">Intensity (1-10)</label>
+            <input type="number" class="form-control" id="intensity" name="intensity" min="1" max="10">
+        </div>
+        <div class="form-group">
+            <label for="triggers">Triggers</label>
+            <textarea class="form-control" id="triggers" name="triggers"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="symptoms">Symptoms</label>
+            <textarea class="form-control" id="symptoms" name="symptoms"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="notes">Notes</label>
+            <textarea class="form-control" id="notes" name="notes"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+{% endblock %}

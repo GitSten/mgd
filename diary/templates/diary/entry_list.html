@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Diary Entries</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Intensity</th>
+                <th>Triggers</th>
+                <th>Symptoms</th>
+                <th>Notes</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entry in entries %}
+            <tr>
+                <td>{{ entry.date }}</td>
+                <td>{{ entry.intensity }}</td>
+                <td>{{ entry.triggers }}</td>
+                <td>{{ entry.symptoms }}</td>
+                <td>{{ entry.notes }}</td>
+                <td>
+                    <a href="{% url 'diary:edit_entry' entry_id=entry.id %}">Edit</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% if user.is_authenticated %}
+    <a class="nav-item nav-link" href="{% url 'diary:add_entry' %}">Add Entry</a>
+    {% endif %}
+</div>
+{% endblock %}

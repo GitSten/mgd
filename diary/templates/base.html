@@ -1,0 +1,65 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ReliefMigraineRecipes</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Bootstrap DateTimePicker CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.39.0/css/tempusdominus-bootstrap-4.min.css" />
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="{% url 'diary:entry_list' %}">ReliefMigraineRecipes</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+
+                <a class="nav-item nav-link" href="{% url 'diary:entry_list' %}">Home</a>
+                {% if user.is_authenticated %}
+                <a class="nav-item nav-link" href="{% url 'diary:add_entry' %}">Add Entry</a>
+                <a class="nav-item nav-link" href="{% url 'diary:blog' %}">Blog</a>
+                <a class="nav-item nav-link" href="{% url 'diary:recipes' %}">Recipes</a>
+                {% endif %}
+
+            </div>
+
+
+            {% if user.is_authenticated %}
+                            <span class="user-name" >|  Logged in user: {{ request.user }}! :)</span> <hr>
+
+            <div class="navbar-nav ml-auto">
+                <form action="{% url 'diary:logout' %}" method="post" class="form-inline">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-link" style="padding: 0; border: none; background: none;">Logout</button>
+                </form>
+            </div>
+            {% else %}
+            <div class="navbar-nav ml-auto">
+                <a class="nav-item nav-link" href="{% url 'diary:login' %}">Login</a>
+                <a class="nav-item nav-link" href="{% url 'diary:register' %}">Sign Up</a>
+            </div>
+            {% endif %}
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        {% block content %}
+        <!-- Content goes here -->
+        {% endblock %}
+    </div>
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/momentjs/2.14.1/moment.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap DateTimePicker JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.39.0/js/tempusdominus-bootstrap-4.min.js"></script>
+</body>
+</html>
