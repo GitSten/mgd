@@ -1,12 +1,78 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container">
+<div class="container mt-5">
     <h2>Edit Diary Entry</h2>
-    <form method="post">
+    <form method="post" class="mt-3" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ form.as_p }}
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                {{ form.date.label_tag }}
+                {{ form.date }}
+            </div>
+            <div class="form-group col-md-6">
+                {{ form.intensity.label_tag }}
+                {{ form.intensity }} <span id="intensityValue" class="ml-2"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form.triggers.label_tag }}
+            <div id="triggers-container" class="row">
+                {% for trigger in form.triggers.field.queryset %}
+                    <div class="col-6 col-md-3 form-check d-flex flex-column align-items-center border-right">
+                        <input class="form-check-input" type="checkbox" id="trigger_{{ trigger.id }}" name="triggers" value="{{ trigger.id }}"
+                        {% if trigger in form.triggers.value %} checked {% endif %} style="margin-left: 8px;">
+                        <label class="form-check-label" for="trigger_{{ trigger.id }}">
+                            {% if trigger.icon %}
+                                <img src="{{ trigger.icon.url }}" alt="{{ trigger.name }}" class="img-fluid trigger-icon" style="width: 50px; height: 50px;">
+                            {% endif %}
+                            <span>{{ trigger.name }}</span>
+                        </label>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form.symptoms.label_tag }}
+            {{ form.symptoms }}
+        </div>
+        <div class="form-group">
+            {{ form.notes.label_tag }}
+            {{ form.notes }}
+        </div>
+        <div class="form-group">
+            {{ form.other_triggers.label_tag }}
+            {{ form.other_triggers }}
+        </div>
         <button type="submit" class="btn btn-primary">Save Changes</button>
     </form>
 </div>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    var intensityInput = document.getElementById('id_intensity');
+    var output = document.getElementById("intensityValue");
+    output.innerHTML = intensityInput.value; // Display the default slider value
+
+    // Update the current slider value (each time you drag the slider handle)
+    intensityInput.oninput = function() {
+        output.innerHTML = this.value;
+    }
+});
+</script>
+<style>
+    #triggers-container .border-right {
+        border-right: 1px solid #dee2e6;
+    }
+    #triggers-container .col-md-3:last-child {
+        border-right: none;
+    }
+    .trigger-icon {
+        margin-bottom: 0.5rem;
+    }
+    .form-check-input {
+        margin-top: 0.3rem;
+        margin-right: 0.3rem;
+        margin-left: 8px;
+    }
+</style>
 {% endblock %}

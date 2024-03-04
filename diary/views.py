@@ -1,5 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
+from django.views.decorators.http import require_POST
+
 from .models import DiaryEntry
 from .forms import DiaryEntryForm
 
@@ -68,3 +70,12 @@ def blog(request):
 @login_required
 def recipes(request):
     return render(request, 'comingsoon.html')
+
+
+@require_POST
+def delete_entry(request, entry_id):
+    entry = DiaryEntry.objects.get(pk=entry_id)
+    # Ensure the user requesting the delete owns the entry
+    if entry.user == request.user:
+        entry.delete()
+    return redirect('diary:entry_list')
