@@ -1,8 +1,9 @@
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST
 
-from .models import DiaryEntry
+from .models import DiaryEntry, Trigger
 from .forms import DiaryEntryForm
 
 from django.contrib.auth.forms import UserCreationForm
@@ -13,26 +14,31 @@ from django.db import IntegrityError
 
 @login_required
 def entry_list(request):
-    """
-    View to display a list of diary entries specific to the logged-in user.
-    """
-    # Filter entries by the logged-in user
-    entries = DiaryEntry.objects.filter(user=request.user).order_by('-date')
+    entry_list = DiaryEntry.objects.filter(user=request.user).order_by('-date')
+    paginator = Paginator(entry_list, 7)  # Show 7 entries per page
+
+    page_number = request.GET.get('page')
+    entries = paginator.get_page(page_number)
+
     return render(request, 'diary/entry_list.html', {'entries': entries})
 
 
-@login_required  # Ensure the user is logged in
+@login_required
 def add_entry(request):
     if request.method == "POST":
-        form = DiaryEntryForm(request.POST)
+        form = DiaryEntryForm(request.POST, request.FILES)
         if form.is_valid():
-            diary_entry = form.save(commit=False)  # Don't save the form immediately
-            diary_entry.user = request.user  # Associate the entry with the currently logged-in user
-            diary_entry.save()  # Now save the diary entry
-            return redirect('diary:entry_list')
+            diary_entry = form.save(commit=False)
+            diary_entry.user = request.user
+            diary_entry.save()
+            form.save_m2m()  # Save the many-to-many data for the form.
+            return redirect('diary:entry_list')  # Adjust the redirect as needed
     else:
         form = DiaryEntryForm()
-    return render(request, 'diary/add_entry.html', {'form': form})
+    triggers_with_icons = Trigger.objects.all()
+    return render(request, 'diary/add_entry.html', {'form': form, 'triggers_with_icons': triggers_with_icons})
+
+
 
 
 class SignUpView(CreateView):
@@ -52,20 +58,27 @@ class SignUpView(CreateView):
 
 @login_required
 def edit_entry(request, entry_id):
-    entry = get_object_or_404(DiaryEntry, pk=entry_id,
-                              user=request.user)  # Ensure the entry belongs to the logged-in user
+    entry = get_object_or_404(DiaryEntry, pk=entry_id, user=request.user)
     if request.method == "POST":
-        form = DiaryEntryForm(request.POST, instance=entry)
+        form = DiaryEntryForm(request.POST, request.FILES, instance=entry)
         if form.is_valid():
             form.save()
-            return redirect('diary:entry_list')  # Redirect to the entry list page
+            return redirect('diary:entry_list')  # Adjust the redirect as needed
     else:
         form = DiaryEntryForm(instance=entry)
-    return render(request, 'diary/edit_entry.html', {'form': form, 'entry': entry})
+    triggers_with_icons = Trigger.objects.all()
+    # Create a set of trigger IDs associated with the entry
+    trigger_ids = set(entry.triggers.values_list('id', flat=True))
+    return render(request, 'diary/edit_entry.html', {'form': form, 'entry': entry, 'triggers_with_icons': triggers_with_icons, 'trigger_ids': trigger_ids})
+
+
+
+
 
 @login_required
 def blog(request):
     return render(request, 'comingsoon.html')
+
 
 @login_required
 def recipes(request):

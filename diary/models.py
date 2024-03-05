@@ -22,7 +22,6 @@ class DiaryEntry(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     date = models.DateField()
     intensity = models.IntegerField()
-    triggers = models.TextField(blank=True)
     other_triggers = models.TextField(blank=True)
     symptoms = models.TextField(blank=True)
     notes = models.TextField(blank=True)
