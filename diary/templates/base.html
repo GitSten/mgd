@@ -39,6 +39,57 @@
             color: #333;
         }
 
+        .navbar, .footer {
+            background-color: rgba(255, 255, 255, 0.8); /* Slightly transparent white */
+        }
+
+        /* Optional: Adjust the navbar's link color for better visibility */
+        .navbar-nav .nav-link {
+            color: #333; /* Darker color for contrast */
+        }
+
+         body {
+        background: url('{% static "\images\background.jpg" %}') no-repeat center center fixed;
+        background-size: cover;
+        color: #000; /* Sets text color to black */
+        }
+
+        .navbar, .footer {
+            background-color: rgba(255, 255, 255, 0.8); /* For slight transparency */
+        }
+
+        /* Adjust link color for better readability */
+        .navbar-nav .nav-link {
+            color: #333;
+        }
+
+                .centered-image {
+            display: block; /* Images are inline by default */
+            margin-left: auto;
+            margin-right: auto;
+            max-width: 100%; /* Makes image responsive */
+        }
+
+         .trigger-display {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+    ..trigger-item {
+        display: flex;
+        align-items: center;
+        margin-right: 10px !important; /* Space between triggers */
+        margin-bottom: 5px !important; /* Space between rows of triggers */
+    }
+    .trigger-item img {
+        width: 30px !important; /* Set the width */
+        height: 30px !important; /* Set the height */
+        object-fit: cover !important; /* Ensure the image covers the area without losing its aspect ratio */
+        margin-right: 5px !important; /* Space between icon and name */
+    }
+
+
+
     </style>
 </head>
 <body>
@@ -52,13 +103,13 @@
                 <a class="nav-item nav-link" href="{% url 'diary:entry_list' %}">Home</a>
                 {% if user.is_authenticated %}
                 <a class="nav-item nav-link" href="{% url 'diary:add_entry' %}">Add Entry</a>
-                <a class="nav-item nav-link" href="{% url 'diary:blog' %}">Blog</a>
+                <a class="nav-item nav-link" href="{% url 'diary:types' %}">Types of Headaches</a>
                 <a class="nav-item nav-link" href="{% url 'diary:recipes' %}">Recipes</a>
                 {% endif %}
             </div>
 
             {% if user.is_authenticated %}
-            <span class="user-name">| Logged in user: {{ request.user }}! :)</span> <hr>
+            <span class="user-name">| Logged in user: {{ request.user }}</span> <hr>
             <div class="navbar-nav ml-auto">
                 <form action="{% url 'diary:logout' %}" method="post" class="form-inline">
                     {% csrf_token %}

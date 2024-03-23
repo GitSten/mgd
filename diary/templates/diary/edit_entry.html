@@ -19,18 +19,34 @@
             {{ form.triggers.label_tag }}
             <div id="triggers-container" class="row">
                 {% for trigger in triggers_with_icons %}
-                    <div class="col-6 col-md-3 d-flex flex-column align-items-center trigger-circle">
-                        <input type="checkbox" id="trigger_{{ trigger.id }}" name="triggers" value="{{ trigger.id }}" class="trigger-input" style="display:none;" {% if trigger.id in trigger_ids %}checked{% endif %}>
-                        <label for="trigger_{{ trigger.id }}" class="circle d-flex align-items-center justify-content-center">
-                            <img src="{{ trigger.icon.url }}" alt="{{ trigger.name }}" class="img-fluid trigger-icon">
-                        </label>
-                        <span class="trigger-text">{{ trigger.name }}</span>
-                    </div>
+                <div class="col-6 col-md-3 d-flex flex-column align-items-center trigger-circle">
+                    <input type="checkbox" id="trigger_{{ trigger.id }}" name="triggers" value="{{ trigger.id }}" class="trigger-input" style="display:none;" {% if trigger.id in trigger_ids %}checked{% endif %}>
+                    <label for="trigger_{{ trigger.id }}" class="circle d-flex align-items-center justify-content-center">
+                        <img src="{{ trigger.icon.url }}" alt="{{ trigger.name }}" class="img-fluid trigger-icon">
+                    </label>
+                    <span class="trigger-text">{{ trigger.name }}</span>
+                </div>
                 {% endfor %}
             </div>
         </div>
 
-         <div class="form-group">
+        <!-- Headache Types Selection -->
+        <div class="form-group">
+            {{ form.headache_types.label_tag }}
+            <div id="headache-types-container" class="row">
+                {% for headache_type in headache_types_with_icons %}
+                <div class="col-6 col-md-3 d-flex flex-column align-items-center trigger-circle">
+                    <input type="checkbox" id="headache_type_{{ headache_type.id }}" name="headache_types" value="{{ headache_type.id }}" class="trigger-input" style="display:none;" {% if headache_type.id in headache_type_ids %}checked{% endif %}>
+                    <label for="headache_type_{{ headache_type.id }}" class="circle d-flex align-items-center justify-content-center">
+                        <img src="{{ headache_type.image.url }}" alt="{{ headache_type.name }}" class="img-fluid trigger-icon">
+                    </label>
+                    <span class="trigger-text">{{ headache_type.name }}</span>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="form-group">
             {{ form.other_triggers.label_tag }}
             {{ form.other_triggers }}
         </div>
@@ -82,7 +98,7 @@ document.addEventListener("DOMContentLoaded", function() {
         height: 30px; /* Adjust as needed */
         margin-bottom: 5px;
     }
-        .trigger-circle {
+    .trigger-circle {
         display: flex;
         flex-direction: column; /* Stack items vertically */
         align-items: center; /* Center-align items horizontally */
@@ -119,8 +135,5 @@ document.addEventListener("DOMContentLoaded", function() {
         text-align: center;
         display: block; /* Ensure text takes its own line */
     }
-
-
-
 </style>
 {% endblock %}

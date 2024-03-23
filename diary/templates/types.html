@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ReliefMigraineRecipes</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Bootstrap DateTimePicker CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.39.0/css/tempusdominus-bootstrap-4.min.css" />
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
+
+    <style>
+
+
+
+
+    </style>
+</head>
+<body>
+
+
+    <div class="container mt-4">
+        {% block content %}
+        <br>
+        <img src="{% static 'images/headache_types.png' %}" alt="Headache Types" class="centered-image">
+        <hr>
+        <div class="content-section">
+    <h1>Different Types of Headaches and Suggested Medications</h1>
+
+    <h2>1. Migraine</h2>
+    <p>Migraines are characterized by intense, throbbing pain typically on one side of the head. They can be accompanied by nausea, vomiting, and sensitivity to light and sound.</p>
+    <h3>Medications:</h3>
+    <ul>
+        <li>Over-the-counter (OTC) pain relievers: ibuprofen, aspirin, or naproxen</li>
+        <li>Triptans: sumatriptan, rizatriptan (prescription needed)</li>
+        <li>Antiemetics: to help with nausea</li>
+        <li>Preventive medications: beta-blockers, antidepressants, or anticonvulsants, in chronic cases</li>
+    </ul>
+
+    <h2>2. Hypertension Headache</h2>
+    <p>Headaches from high blood pressure usually occur on both sides of the head and are typically worse with any activity. They often feature a pulsating quality.</p>
+    <h3>Medications:</h3>
+    <ul>
+        <li>Antihypertensives: to manage high blood pressure</li>
+        <li>OTC pain relievers: for mild pain, but it's crucial to control blood pressure primarily</li>
+    </ul>
+
+    <h2>3. Stress Headache</h2>
+    <p>Also known as tension headaches, they are often described as a tight band around the head with a constant, dull ache on both sides.</p>
+    <h3>Medications:</h3>
+    <ul>
+        <li>OTC pain relievers: acetaminophen, aspirin, ibuprofen, or naproxen</li>
+        <li>Muscle relaxants: in cases where muscle stiffness is significant</li>
+        <li>Stress management: relaxation techniques, exercise, or counseling may be advised</li>
+    </ul>
+
+    <h2>4. Sinus Headache</h2>
+    <p>Caused by sinus infection or inflammation, these headaches are accompanied by pain and pressure around the forehead, cheeks, and eyes.</p>
+    <h3>Medications:</h3>
+    <ul>
+        <li>Decongestants: to reduce nasal congestion</li>
+        <li>Antibiotics: if a bacterial infection is the cause</li>
+        <li>Nasal corticosteroids: to decrease inflammation in the sinuses</li>
+    </ul>
+
+    <h2>5. Cluster Headache</h2>
+    <p>Cluster headaches are excruciating attacks that occur in cyclical patterns or clusters. They are often accompanied by watery eyes and nasal congestion.</p>
+    <h3>Medications:</h3>
+    <ul>
+        <li>Acute treatments: sumatriptan, oxygen therapy</li>
+        <li>Preventive medications: verapamil, corticosteroids, or lithium</li>
+    </ul>
+
+    <p><strong>General Advice:</strong> For all types of headaches, lifestyle modifications can play a vital role in management. Adequate hydration, regular sleep patterns, stress management, and avoidance of known triggers are crucial steps.</p>
+    <p>Always consult with a healthcare provider before starting or changing a medication regimen. They can provide guidance on which medications are suitable for your specific situation and ensure that you use them safely, considering potential side effects and interactions with other medications.</p>
+</div>
+        {% endblock %}
+    </div>
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/momentjs/2.14.1/moment.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap DateTimePicker JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.39.0/js/tempusdominus-bootstrap-4.min.js"></script>
+</body>
+</html>

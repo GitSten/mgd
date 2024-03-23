@@ -76,8 +76,8 @@ def edit_entry(request, entry_id):
 
 
 @login_required
-def blog(request):
-    return render(request, 'comingsoon.html')
+def types(request):
+    return render(request, 'types.html')
 
 
 @login_required
